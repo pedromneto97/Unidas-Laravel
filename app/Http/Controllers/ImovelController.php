@@ -17,7 +17,16 @@ class ImovelController extends Controller
     public function index()
     {
         try {
-            return response()->json(Imovel::all());
+            $imoveis = DB::table('imoveis')
+                ->leftJoin('tipos', 'imoveis.id_tipo', '=', 'tipos.id')
+                ->leftJoin('finalidades', 'imoveis.id_finalidade', '=', 'finalidades.id')
+                ->leftJoin('ruas', 'imoveis.id_rua', '=', 'ruas.id')
+                ->leftJoin('bairros', 'ruas.id_bairro', '=', 'bairros.id')
+                ->leftJoin('cidades', 'bairros.id_cidade', '=', 'cidades.id')
+                ->leftJoin('estados', 'cidades.id_estado', '=', 'estados.id')
+                ->leftJoin('fotos','imoveis.id','=','fotos.id_imovel')
+                ->get();
+            return response()->json($imoveis);
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 419);
         }
@@ -81,13 +90,13 @@ class ImovelController extends Controller
     {
         try {
             $imovel = DB::table('imoveis')
-                ->where('imoveis.id', $id)
                 ->leftJoin('tipos', 'imoveis.id_tipo', '=', 'tipos.id')
                 ->leftJoin('finalidades', 'imoveis.id_finalidade', '=', 'finalidades.id')
                 ->leftJoin('ruas', 'imoveis.id_rua', '=', 'ruas.id')
                 ->leftJoin('bairros', 'ruas.id_bairro', '=', 'bairros.id')
                 ->leftJoin('cidades', 'bairros.id_cidade', '=', 'cidades.id')
                 ->leftJoin('estados', 'cidades.id_estado', '=', 'estados.id')
+                ->where('imoveis.id', $id)
                 ->get();
             return response()->json($imovel);
         } catch (\Exception $exception) {
@@ -155,7 +164,7 @@ class ImovelController extends Controller
             if (Imovel::destroy($id))
                 return response("Imovel deletado", 200);
             else
-                return response("Nenhum imovel deletado",200);
+                return response("Nenhum imovel deletado", 200);
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 419);
         }
