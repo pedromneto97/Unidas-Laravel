@@ -25,6 +25,7 @@ class ImovelController extends Controller
                 ->leftJoin('cidades', 'bairros.id_cidade', '=', 'cidades.id')
                 ->leftJoin('estados', 'cidades.id_estado', '=', 'estados.id')
                 ->leftJoin('fotos','imoveis.id','=','fotos.id_imovel')
+                ->limit(8)
                 ->get();
             return response()->json($imoveis);
         } catch (\Exception $exception) {
