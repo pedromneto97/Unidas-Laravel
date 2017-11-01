@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Imovel;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use DB;
 
 class ImovelController extends Controller
 {
@@ -24,7 +24,7 @@ class ImovelController extends Controller
                 ->leftJoin('bairros', 'ruas.id_bairro', '=', 'bairros.id')
                 ->leftJoin('cidades', 'bairros.id_cidade', '=', 'cidades.id')
                 ->leftJoin('estados', 'cidades.id_estado', '=', 'estados.id')
-                ->leftJoin('fotos','imoveis.id','=','fotos.id_imovel')
+                ->leftJoin('fotos', 'imoveis.id', '=', 'fotos.id_imovel')
                 ->limit(8)
                 ->get();
             return response()->json($imoveis);
@@ -98,6 +98,15 @@ class ImovelController extends Controller
                 ->leftJoin('cidades', 'bairros.id_cidade', '=', 'cidades.id')
                 ->leftJoin('estados', 'cidades.id_estado', '=', 'estados.id')
                 ->where('imoveis.id', $id)
+                ->get();
+//            $imovel = Imovel::find($id)->Rua()->get();
+            $imovel = Imovel::with('rua')
+                ->with('rua.bairro')
+                ->with('rua.bairro.cidade')
+                ->with('rua.bairro.cidade.estado')
+                ->with('finalidade')
+                ->with('tipo')
+                ->where('id', $id)
                 ->get();
             return response()->json($imovel);
         } catch (\Exception $exception) {
