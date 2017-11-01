@@ -130,4 +130,17 @@ class RuaController extends Controller
             return response($exception->getMessage(), 419);
         }
     }
+
+    //Encontra pelo CEP
+    public function cep($id)
+    {
+        try {
+            $rua = Rua::where('cep', $id)->get();
+            if ($rua > 0)
+                return response()->json($rua);
+            return response('Nenhum cep encontrado', 204);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 419);
+        }
+    }
 }
