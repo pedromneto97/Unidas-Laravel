@@ -17,15 +17,14 @@ class ImovelController extends Controller
     public function index()
     {
         try {
-            $imoveis = DB::table('imoveis')
-                ->leftJoin('tipos', 'imoveis.id_tipo', '=', 'tipos.id')
-                ->leftJoin('finalidades', 'imoveis.id_finalidade', '=', 'finalidades.id')
-                ->leftJoin('ruas', 'imoveis.id_rua', '=', 'ruas.id')
-                ->leftJoin('bairros', 'ruas.id_bairro', '=', 'bairros.id')
-                ->leftJoin('cidades', 'bairros.id_cidade', '=', 'cidades.id')
-                ->leftJoin('estados', 'cidades.id_estado', '=', 'estados.id')
-                ->leftJoin('fotos', 'imoveis.id', '=', 'fotos.id_imovel')
-                ->limit(8)
+            $imoveis = Imovel::with('rua')
+                ->with('rua.bairro')
+                ->with('rua.bairro.cidade')
+                ->with('rua.bairro.cidade.estado')
+                ->with('finalidade')
+                ->with('tipo')
+                ->with('foto')
+                ->limit(10)
                 ->get();
             return response()->json($imoveis);
         } catch (\Exception $exception) {
@@ -57,7 +56,7 @@ class ImovelController extends Controller
                 'valor' => 'numeric|nullable',
                 'dormitorio' => 'numeric|nullable',
                 'suite' => 'numeric|nullable',
-                'banheiros' => 'numeric|nullable',
+                'banheiro' => 'numeric|nullable',
                 'garagem' => 'numeric|nullable',
                 'mobilia' => 'boolean',
                 'aservico' => 'boolean',
@@ -90,22 +89,13 @@ class ImovelController extends Controller
     public function show($id)
     {
         try {
-            $imovel = DB::table('imoveis')
-                ->leftJoin('tipos', 'imoveis.id_tipo', '=', 'tipos.id')
-                ->leftJoin('finalidades', 'imoveis.id_finalidade', '=', 'finalidades.id')
-                ->leftJoin('ruas', 'imoveis.id_rua', '=', 'ruas.id')
-                ->leftJoin('bairros', 'ruas.id_bairro', '=', 'bairros.id')
-                ->leftJoin('cidades', 'bairros.id_cidade', '=', 'cidades.id')
-                ->leftJoin('estados', 'cidades.id_estado', '=', 'estados.id')
-                ->where('imoveis.id', $id)
-                ->get();
-//            $imovel = Imovel::find($id)->Rua()->get();
             $imovel = Imovel::with('rua')
                 ->with('rua.bairro')
                 ->with('rua.bairro.cidade')
                 ->with('rua.bairro.cidade.estado')
                 ->with('finalidade')
                 ->with('tipo')
+                ->with('foto')
                 ->where('id', $id)
                 ->get();
             return response()->json($imovel);
@@ -141,8 +131,8 @@ class ImovelController extends Controller
                 'valor' => 'numeric|nullable',
                 'dormitorio' => 'numeric|nullable',
                 'suite' => 'numeric|nullable',
-                'banheiros' => 'numeric|nullable',
-                'garagens' => 'numeric|nullable',
+                'banheiro' => 'numeric|nullable',
+                'garagem' => 'numeric|nullable',
                 'mobilia' => 'boolean',
                 'aservico' => 'boolean',
                 'descricao' => 'string',

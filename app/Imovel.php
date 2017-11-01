@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Imovel extends Model
 {
     protected $table = "imoveis";
-    protected $fillable = ['numero', 'valor', 'dormitorio', 'suite', 'banheiros', 'garagem', 'mobilia', 'aservico',
+    protected $fillable = ['numero', 'valor', 'dormitorio', 'suite', 'banheiro', 'garagem', 'mobilia', 'aservico',
         'descricao', 'aterreno', 'aconstruida', 'id_finalidade', 'id_tipo', 'id_rua'];
 
     public function Rua()
@@ -23,5 +23,10 @@ class Imovel extends Model
     public function Tipo()
     {
         return $this->belongsTo('App\Tipo', 'id_tipo');
+    }
+
+    public function Foto()
+    {
+        return $this->hasMany('App\Foto', 'id_imovel');
     }
 }

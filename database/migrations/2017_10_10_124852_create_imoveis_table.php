@@ -19,7 +19,7 @@ class CreateImoveisTable extends Migration
             $table->double('valor')->nullable(true);
             $table->integer('dormitorio', false, true)->nullable(true);
             $table->integer('suite', false, true)->nullable(true);
-            $table->integer('banheiros', false, true)->nullable(true);
+            $table->integer('banheiro', false, true)->nullable(true);
             $table->integer('garagem', false, true)->nullable(true);
             $table->boolean('mobilia')->nullable(true);
             $table->boolean('aservico')->nullable(true);
