@@ -8,5 +8,10 @@ class Cidade extends Model
 {
     protected $table = "cidades";
 
-    protected $fillable = ['cidade','id_estado'];
+    protected $fillable = ['cidade', 'id_estado'];
+
+    public function Estado()
+    {
+        return $this->belongsTo('App\Estado', 'id_estado');
+    }
 }
