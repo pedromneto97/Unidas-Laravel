@@ -17,7 +17,6 @@ class CreateTiposTable extends Migration
             $table->increments('id');
             $table->string('tipo')->unique()->nullable(false);
 
-            $table->timestamps();
         });
     }
 

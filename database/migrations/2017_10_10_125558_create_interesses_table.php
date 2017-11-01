@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateInteressesTable extends Migration
 {
@@ -19,8 +19,8 @@ class CreateInteressesTable extends Migration
             $table->string('telefone')->nullable(true);
             $table->string('email')->nullable(true);
             $table->boolean('atendido')->nullable(false);
-
-            $table->integer('id_imovel',false,true);
+            $table->integer('id_imovel', false, true);
+            $table->timestamps();
 
             $table->foreign('id_imovel')->references('id')->on('imoveis')->onDelete('cascade');
         });

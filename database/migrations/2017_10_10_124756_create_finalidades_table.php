@@ -16,7 +16,6 @@ class CreateFinalidadesTable extends Migration
         Schema::create('finalidades', function (Blueprint $table) {
             $table->increments('id');
             $table->string('finalidade')->unique()->nullable(false);
-            $table->timestamps();
         });
     }
 

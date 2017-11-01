@@ -34,8 +34,6 @@ class CreateImoveisTable extends Migration
             $table->foreign('id_finalidade')->references('id')->on('finalidades')->onDelete('cascade');
             $table->foreign('id_tipo')->references('id')->on('tipos')->onDelete('cascade');
             $table->foreign('id_rua')->references('id')->on('ruas')->onDelete('cascade');
-
-            $table->timestamps();
         });
     }
 

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateRuasTable extends Migration
 {
@@ -17,9 +17,7 @@ class CreateRuasTable extends Migration
             $table->increments('id');
             $table->string('cep')->unique()->nullable(true);
             $table->string('rua')->nullable(false);
-            $table->integer('id_bairro',false,true);
-
-            $table->timestamps();
+            $table->integer('id_bairro', false, true);
 
             $table->foreign('id_bairro')->references('id')->on('bairros')->onDelete('cascade');
         });
