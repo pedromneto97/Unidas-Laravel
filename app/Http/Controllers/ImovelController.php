@@ -28,7 +28,7 @@ class ImovelController extends Controller
                 ->get();
             return response()->json($imoveis);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -76,7 +76,7 @@ class ImovelController extends Controller
             return response()->json($imovel);
 
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -100,7 +100,7 @@ class ImovelController extends Controller
                 ->get();
             return response()->json($imovel);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -147,7 +147,7 @@ class ImovelController extends Controller
             $imovel->update($request->all());
             return response()->json($imovel);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -164,9 +164,9 @@ class ImovelController extends Controller
             if (Imovel::destroy($id))
                 return response("Imovel deletado", 200);
             else
-                return response("Nenhum imovel deletado", 200);
+                return response("Nenhum imovel deletado", 204);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 }
