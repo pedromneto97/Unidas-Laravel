@@ -15,7 +15,7 @@ class CreateRuasTable extends Migration
     {
         Schema::create('ruas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cep')->unique()->nullable(true);
+            $table->integer('cep')->unique()->nullable(true);
             $table->string('rua')->nullable(false);
             $table->integer('id_bairro', false, true);
 
