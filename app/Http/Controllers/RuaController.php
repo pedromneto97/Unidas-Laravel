@@ -19,7 +19,7 @@ class RuaController extends Controller
             $rua = Rua::all();
             return response()->json($rua);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -55,7 +55,7 @@ class RuaController extends Controller
             return response()->json($rua);
 
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -72,7 +72,7 @@ class RuaController extends Controller
             return response()->json($rua);
 
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -109,7 +109,7 @@ class RuaController extends Controller
             return response()->json($rua);
 
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -127,7 +127,7 @@ class RuaController extends Controller
             else
                 return response("Nenhuma rua deletada", 200);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -135,12 +135,17 @@ class RuaController extends Controller
     public function cep($id)
     {
         try {
-            $rua = Rua::where('cep', $id)->get();
-            if ($rua > 0)
+            $rua = Rua::with('bairro')
+                ->with('bairro.cidade')
+                ->with('bairro.cidade.estado')
+                ->where('cep', $id)
+                ->get();
+            if ($rua->count() > 0)
                 return response()->json($rua);
             return response('Nenhum cep encontrado', 204);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
+
 }

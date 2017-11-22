@@ -18,7 +18,7 @@ class BairroController extends Controller
         try {
             return response()->json(Bairro::all());
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -54,7 +54,7 @@ class BairroController extends Controller
             return response()->json($bairro);
 
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -71,7 +71,7 @@ class BairroController extends Controller
             return response()->json($bairro);
 
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -107,7 +107,7 @@ class BairroController extends Controller
             return response()->json($bairro);
 
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -125,7 +125,21 @@ class BairroController extends Controller
             else
                 return response("Nenhum bairro deletado", 200);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
+        }
+    }
+
+    //Busca bairro
+    public function busca(Request $request)
+    {
+        try {
+            $bairro = Bairro::where('bairro', 'like', $request->bairro)->get();
+            if ($bairro->count() > 0)
+                return response()->json($bairro);
+            else
+                return response('Nada encontrado', 204);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cidade;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -19,7 +20,7 @@ class CidadeController extends Controller
             $cidade = Cidade::find();
             return response()->json($cidade);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -55,7 +56,7 @@ class CidadeController extends Controller
             return response()->json($cidade);
 
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -69,9 +70,9 @@ class CidadeController extends Controller
     {
         try {
             $cidade = Cidade::find($id);
-                return response()->json($cidade);
+            return response()->json($cidade);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -107,7 +108,7 @@ class CidadeController extends Controller
             return response()->json($cidade);
 
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
         }
     }
 
@@ -125,7 +126,28 @@ class CidadeController extends Controller
             else
                 return response("Nenhuma cidade deletada", 200);
         } catch (\Exception $exception) {
-            return response($exception->getMessage(), 419);
+            return response($exception->getMessage(), 401);
+        }
+    }
+
+    //Busca cidade e estado
+    public function busca(Request $request)
+    {
+        try {
+            $estado = $request->estado;
+            $cidade = $request->cidade;
+            $uf = $request->uf;
+            $resultado =
+                Cidade::with('estado')
+                    ->whereHas('estado', function ($query) use ($estado, $uf) {
+                        $query->where('estado', $estado)
+                            ->orWhere('uf', $uf);
+                    })
+                    ->where('cidades.cidade', $cidade)
+                    ->get();
+            return response()->json($resultado);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
         }
     }
 }
