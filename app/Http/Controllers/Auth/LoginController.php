@@ -42,7 +42,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = ['email' => $request->email, 'password' => sha1($request->password)];
+        $credentials = ['username' => $request->username, 'password' => sha1($request->password)];
         if (!Auth::attempt($credentials))
             return response('Unauthorised', 401);
 
