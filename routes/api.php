@@ -11,8 +11,9 @@
 |
 */
 
-Route::post('cadastro', 'Auth\RegisterController@create');
-Route::post('login', 'Auth\LoginController@login');
+Route::post('auth/cadastro', 'Auth\RegisterController@create');
+Route::post('auth/login', 'Auth\LoginController@login');
+Route::get('auth/logout', 'Auth\LoginController@logout');
 
 Route::resource('imovel', 'ImovelController');
 
