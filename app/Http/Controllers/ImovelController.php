@@ -24,7 +24,7 @@ class ImovelController extends Controller
                 ->with('finalidade')
                 ->with('tipo')
                 ->with('foto')
-                ->limit(10)
+                ->limit(8)
                 ->get();
             return response()->json($imoveis);
         } catch (\Exception $exception) {
@@ -165,6 +165,70 @@ class ImovelController extends Controller
                 return response("Imovel deletado", 200);
             else
                 return response("Nenhum imovel deletado", 204);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
+    }
+
+    /*
+     * Busca por finalidade
+     */
+    public function buscaFinalidade($id)
+    {
+        try {
+            $imoveis = Imovel::with('rua')
+                ->with('rua.bairro')
+                ->with('rua.bairro.cidade')
+                ->with('rua.bairro.cidade.estado')
+                ->with('finalidade')
+                ->with('tipo')
+                ->with('foto')
+                ->where('id_finalidade', $id)
+                ->get();
+            return response()->json($imoveis);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
+    }
+
+    /*
+     * Busca por tipo
+     */
+    public function buscaTipo($id)
+    {
+        try {
+            $imoveis = Imovel::with('rua')
+                ->with('rua.bairro')
+                ->with('rua.bairro.cidade')
+                ->with('rua.bairro.cidade.estado')
+                ->with('finalidade')
+                ->with('tipo')
+                ->with('foto')
+                ->where('id_tipo', $id)
+                ->get();
+            return response()->json($imoveis);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
+    }
+
+    /*
+     * Busca por finalidade e tipo
+     */
+    public function buscaTipoFinalidade($idtipo, $idfinalidade)
+    {
+        try {
+            $imoveis = Imovel::with('rua')
+                ->with('rua.bairro')
+                ->with('rua.bairro.cidade')
+                ->with('rua.bairro.cidade.estado')
+                ->with('finalidade')
+                ->with('tipo')
+                ->with('foto')
+                ->where('id_finalidade', $idfinalidade)
+                ->where('id_tipo', $idtipo)
+                ->get();
+            return response()->json($imoveis);
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 401);
         }
