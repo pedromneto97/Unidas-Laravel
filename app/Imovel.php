@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Imovel extends Model
 {
     protected $table = "imoveis";
+
     protected $fillable = ['numero', 'valor', 'dormitorio', 'suite', 'banheiro', 'garagem', 'mobilia', 'aservico',
         'descricao', 'aterreno', 'aconstruida', 'id_finalidade', 'id_tipo', 'id_rua'];
+
+    public $timestamps = false;
 
     public function Rua()
     {

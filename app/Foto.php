@@ -9,4 +9,6 @@ class Foto extends Model
     protected $table = 'fotos';
 
     protected $fillable = ['foto', 'id_imovel'];
+
+    public $timestamps = false;
 }

@@ -9,6 +9,7 @@ class Bairro extends Model
     protected $table = 'bairros';
 
     protected $fillable = ['bairro', 'id_cidade'];
+    public $timestamps = false;
 
     public function Cidade()
     {

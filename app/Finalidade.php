@@ -9,4 +9,6 @@ class Finalidade extends Model
     protected $table = 'finalidades';
 
     protected $fillable = ['finalidade'];
+
+    public $timestamps = false;
 }

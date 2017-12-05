@@ -10,6 +10,8 @@ class Rua extends Model
 
     protected $fillable = ['cep', 'rua', 'id_bairro'];
 
+    public $timestamps = false;
+
     public function Bairro()
     {
         return $this->belongsTo('App\Bairro', 'id_bairro');

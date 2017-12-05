@@ -10,6 +10,8 @@ class Cidade extends Model
 
     protected $fillable = ['cidade', 'id_estado'];
 
+    public $timestamps = false;
+
     public function Estado()
     {
         return $this->belongsTo('App\Estado', 'id_estado');
