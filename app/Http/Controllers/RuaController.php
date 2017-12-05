@@ -43,14 +43,18 @@ class RuaController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'cep' => 'sometimes|required|string|size:8',
+                'cep' => 'sometimes|required|integer|digits:8',
                 'rua' => 'required|string',
-                'id_estado' => 'required|exist:estados,id'
+                'id_bairro' => 'required|exists:estados,id'
             ]);
             if ($validator->fails())
                 return response($validator->errors(), 419);
             $rua = new Rua();
-            $rua->fill($request->all());
+            $rua->fill([
+                'cep' => $request->cep,
+                'rua' => $request->rua,
+                'id_bairro' => $request->id_bairro
+            ]);
             $rua->save();
             return response()->json($rua);
 
@@ -99,9 +103,9 @@ class RuaController extends Controller
         try {
             $rua = Rua::find($id);
             $validator = Validator::make($request->all(), [
-                'cep' => 'sometimes|required|string|size:8',
+                'cep' => 'sometimes|required|integer|size:8',
                 'rua' => 'required|string',
-                'id_estado' => 'required|exist:estados,id'
+                'id_bairro' => 'required|exists:estados,id'
             ]);
             if ($validator->fails())
                 return response($validator->errors(), 419);

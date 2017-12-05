@@ -31,18 +31,33 @@ class FotoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        try {
+            dd($request);
+            $validator = Validator::make($request->all(), [
+                'foto' => 'string'
+            ]);
+            if ($validator->fails())
+                return response($validator->errors(), 419);
+
+            $imovel = new Foto();
+            $imovel->fill($request->all());
+            $imovel->save();
+            return response()->json($imovel);
+
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Foto  $foto
+     * @param  \App\Foto $foto
      * @return \Illuminate\Http\Response
      */
     public function show(Foto $foto)
@@ -53,7 +68,7 @@ class FotoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Foto  $foto
+     * @param  \App\Foto $foto
      * @return \Illuminate\Http\Response
      */
     public function edit(Foto $foto)
@@ -64,8 +79,8 @@ class FotoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Foto  $foto
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Foto $foto
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Foto $foto)
@@ -76,7 +91,7 @@ class FotoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Foto  $foto
+     * @param  \App\Foto $foto
      * @return \Illuminate\Http\Response
      */
     public function destroy(Foto $foto)

@@ -43,13 +43,15 @@ class BairroController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'bairro' => 'required|string|min:3',
-                'id_cidade' => 'required|exist:cidades,id',
+                'id_cidade' => 'required|exists:cidades,id',
             ]);
             if ($validator->fails())
                 return response($validator->errors(), 419);
-
             $bairro = new Bairro();
-            $bairro->fill($request->all());
+            $bairro->fill([
+                'bairro' => $request->bairro,
+                'id_cidade' => $request->id_cidade
+                ]);
             $bairro->save();
             return response()->json($bairro);
 
