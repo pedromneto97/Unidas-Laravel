@@ -38,3 +38,5 @@ Route::resource('interesse', 'InteresseController', ['except' => ['create', 'edi
 Route::resource('tipo', 'TipoController', ['except' => ['create', 'edit']]);
 
 Route::resource('finalidade', 'FinalidadeController', ['except' => ['create', 'edit']]);
+
+Route::resource('foto', 'FotoController', ['except' => ['create', 'edit']]);
