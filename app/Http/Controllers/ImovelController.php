@@ -170,6 +170,27 @@ class ImovelController extends Controller
     }
 
     /*
+     * Get all imoveis
+     */
+    public function todos()
+    {
+        try {
+            $imoveis = Imovel::with('rua')
+                ->with('rua.bairro')
+                ->with('rua.bairro.cidade')
+                ->with('rua.bairro.cidade.estado')
+                ->with('finalidade')
+                ->with('tipo')
+                ->with('foto')
+                ->get();
+            return response()->json($imoveis);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
+    }
+
+
+    /*
      * Busca por finalidade
      */
     public function buscaFinalidade($id)
