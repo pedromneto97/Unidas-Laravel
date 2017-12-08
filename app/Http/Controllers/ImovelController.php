@@ -97,7 +97,7 @@ class ImovelController extends Controller
                 ->with('tipo')
                 ->with('foto')
                 ->where('id', $id)
-                ->get();
+                ->first();
             return response()->json($imovel);
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 401);
@@ -160,7 +160,6 @@ class ImovelController extends Controller
     public function destroy($id)
     {
         try {
-
             if (Imovel::destroy($id))
                 return response("Imovel deletado", 200);
             else

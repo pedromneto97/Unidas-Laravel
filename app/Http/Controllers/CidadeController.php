@@ -69,7 +69,9 @@ class CidadeController extends Controller
     public function show($id)
     {
         try {
-            $cidade = Cidade::find($id);
+            $cidade = Cidade::with('estado')
+                ->where('id', $id)
+                ->first();
             return response()->json($cidade);
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 401);

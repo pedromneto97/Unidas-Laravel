@@ -72,7 +72,11 @@ class RuaController extends Controller
     public function show($id)
     {
         try {
-            $rua = Rua::find($id);
+            $rua = Rua::with('bairro')
+                ->with('bairro.cidade')
+                ->with('bairro.cidade.estado')
+                ->where('id', $id)
+                ->first();
             return response()->json($rua);
 
         } catch (\Exception $exception) {

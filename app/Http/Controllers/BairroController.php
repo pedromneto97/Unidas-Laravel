@@ -51,7 +51,7 @@ class BairroController extends Controller
             $bairro->fill([
                 'bairro' => $request->bairro,
                 'id_cidade' => $request->id_cidade
-                ]);
+            ]);
             $bairro->save();
             return response()->json($bairro);
 
@@ -69,7 +69,10 @@ class BairroController extends Controller
     public function show($id)
     {
         try {
-            $bairro = Bairro::find($id);
+            $bairro = Bairro::with('cidade')
+                ->with('cidade.estado')
+                ->where('id', $id)
+                ->first();
             return response()->json($bairro);
 
         } catch (\Exception $exception) {
