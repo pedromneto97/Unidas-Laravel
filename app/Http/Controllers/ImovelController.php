@@ -170,27 +170,6 @@ class ImovelController extends Controller
     }
 
     /*
-     * Get all imoveis
-     */
-    public function todos()
-    {
-        try {
-            $imoveis = Imovel::with('rua')
-                ->with('rua.bairro')
-                ->with('rua.bairro.cidade')
-                ->with('rua.bairro.cidade.estado')
-                ->with('finalidade')
-                ->with('tipo')
-                ->with('foto')
-                ->get();
-            return response()->json($imoveis);
-        } catch (\Exception $exception) {
-            return response($exception->getMessage(), 401);
-        }
-    }
-
-
-    /*
      * Busca por finalidade
      */
     public function buscaFinalidade($id)
@@ -247,6 +226,26 @@ class ImovelController extends Controller
                 ->with('foto')
                 ->where('id_finalidade', $idfinalidade)
                 ->where('id_tipo', $idtipo)
+                ->get();
+            return response()->json($imoveis);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
+    }
+
+    /*
+    * Get all imoveis
+    */
+    public function todos()
+    {
+        try {
+            $imoveis = Imovel::with('rua')
+                ->with('rua.bairro')
+                ->with('rua.bairro.cidade')
+                ->with('rua.bairro.cidade.estado')
+                ->with('finalidade')
+                ->with('tipo')
+                ->with('foto')
                 ->get();
             return response()->json($imoveis);
         } catch (\Exception $exception) {

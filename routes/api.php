@@ -11,15 +11,16 @@
 |
 */
 
+
 Route::post('auth/cadastro', 'Auth\RegisterController@create');
 Route::post('auth/login', 'Auth\LoginController@login');
 Route::get('auth/logout', 'Auth\LoginController@logout');
 
+Route::get('imovel/todos', 'ImovelController@todos');
 Route::resource('imovel', 'ImovelController');
 Route::get('imovel/finalidade/{id}', 'ImovelController@buscaFinalidade');
 Route::get('imovel/tipo/{id}', 'ImovelController@buscaFinalidade');
 Route::get('imovel/busca/{idtipo}/{idfinalidade}', 'ImovelController@buscaTipoFinalidade');
-Route::get('imovel/todos', 'ImovelController@todos')->name('imovel.all');
 
 Route::resource('estado', 'EstadoController');
 
