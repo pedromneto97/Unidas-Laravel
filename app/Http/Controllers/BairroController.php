@@ -16,7 +16,10 @@ class BairroController extends Controller
     public function index()
     {
         try {
-            return response()->json(Bairro::all());
+            $bairro = Bairro::with('cidade')
+                ->with('cidade.estado')
+                ->get();
+            return response()->json($bairro);
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 401);
         }

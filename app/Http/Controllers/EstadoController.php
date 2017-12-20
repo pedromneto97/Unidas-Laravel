@@ -15,7 +15,12 @@ class EstadoController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $estado = Estado::all();
+            return response()->json($estado);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
     }
 
     /**
@@ -124,7 +129,7 @@ class EstadoController extends Controller
             if (Estado::destroy($id))
                 return response("Estado deletado", 200);
             else
-                return response("Nenhum estado deletado",200);
+                return response("Nenhum estado deletado", 200);
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 419);
         }

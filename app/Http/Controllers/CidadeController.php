@@ -17,7 +17,8 @@ class CidadeController extends Controller
     public function index()
     {
         try {
-            $cidade = Cidade::find();
+            $cidade = Cidade::with('estado')
+                ->get();
             return response()->json($cidade);
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 401);
