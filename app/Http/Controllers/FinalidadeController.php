@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Finalidade;
 use Illuminate\Http\Request;
+use DB;
 
 class FinalidadeController extends Controller
 {
@@ -15,7 +16,9 @@ class FinalidadeController extends Controller
     public function index()
     {
         try {
-            $finalidade = Finalidade::all();
+            $finalidade = DB::table('finalidades')
+                ->orderBy('finalidade', 'ASC')
+                ->get();
             return response()->json($finalidade);
 
         } catch (\Exception $exception) {

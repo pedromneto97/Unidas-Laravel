@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tipo;
+use DB;
 use Illuminate\Http\Request;
 
 class TipoController extends Controller
@@ -15,7 +16,9 @@ class TipoController extends Controller
     public function index()
     {
         try {
-            $tipo = Tipo::all();
+            $tipo = DB::table('tipos')
+                ->orderBy('tipo', 'ASC')
+                ->get();
             return response()->json($tipo);
 
         } catch (\Exception $exception) {
