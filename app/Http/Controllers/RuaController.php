@@ -16,7 +16,10 @@ class RuaController extends Controller
     public function index()
     {
         try {
-            $rua = Rua::all();
+            $rua = Rua::with('bairro')
+                ->with('bairro.cidade')
+                ->with('bairro.cidade.estado')
+                ->get();
             return response()->json($rua);
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 401);
