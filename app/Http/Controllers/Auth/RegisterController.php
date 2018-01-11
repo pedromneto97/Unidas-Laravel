@@ -57,7 +57,7 @@ class RegisterController extends Controller
                 'password' => 'required|string|min:6|max:16|confirmed',
             ]);
             if ($validators->fails())
-                return response('Falha na validação', 401);
+                return response()->json($validators->errors(), 401);
             $user = new User();
             $senha = sha1($request->password);
             $user->fill([
