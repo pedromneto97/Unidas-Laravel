@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Foto;
+use File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class FotoController extends Controller
@@ -37,17 +39,25 @@ class FotoController extends Controller
     public function store(Request $request)
     {
         try {
-            dd($request);
             $validator = Validator::make($request->all(), [
-                'foto' => 'string'
+                'foto' => 'required|file',
+                'id_imovel' => 'required|exists:imoveis,id'
             ]);
             if ($validator->fails())
-                return response($validator->errors(), 419);
-
-            $imovel = new Foto();
-            $imovel->fill($request->all());
-            $imovel->save();
-            return response()->json($imovel);
+                return response($validator->errors(), 401);
+            $ext = $request->foto->extension();
+            $nome = time();
+            $nome = "{$nome}.{$ext}";
+            $upload = $request->foto->storeAs('imagens', $nome, 'public');
+            if (!$upload)
+                return response('Erro ao realizar upload', 401);
+            $foto = new Foto();
+            $foto->fill([
+                'id_imovel' => $request->id_imovel,
+                'foto' => $nome
+            ]);
+            $foto->save();
+            return response()->json($foto);
 
         } catch (\Exception $exception) {
             return response($exception->getMessage(), 401);
@@ -60,9 +70,14 @@ class FotoController extends Controller
      * @param  \App\Foto $foto
      * @return \Illuminate\Http\Response
      */
-    public function show(Foto $foto)
+    public function show($id)
     {
-        //
+        try {
+            $foto = Foto::find($id);
+            return response()->json($foto);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
     }
 
     /**
@@ -83,9 +98,30 @@ class FotoController extends Controller
      * @param  \App\Foto $foto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Foto $foto)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $foto = Foto::find($id);
+            $validator = Validator::make($request->all(), [
+                'foto' => 'required|file',
+            ]);
+            if ($validator->fails())
+                return response($validator->errors(), 401);
+            $ext = $request->foto->extension();
+            $nome = time();
+            $nome = "{$nome}.{$ext}";
+            $upload = $request->foto->storeAs('imagens', $nome, 'public');
+            if (!$upload)
+                return response('Erro ao realizar upload', 401);
+            Storage::disk('public')->delete("imagens/{$foto->foto}");
+            $foto->update([
+                'foto' => $nome
+            ]);
+            return response()->json($foto);
+
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
     }
 
     /**
@@ -94,8 +130,30 @@ class FotoController extends Controller
      * @param  \App\Foto $foto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Foto $foto)
+    public function destroy($id)
     {
-        //
+        try {
+            $foto = Foto::find($id);
+            $nome = $foto->foto;
+            if ($foto->delete()) {
+                Storage::disk('public')->delete("imagens/{$nome}");
+                return response("Foto deletada", 200);
+            } else
+                return response("Nenhuma foto deletada", 204);
+            return response()->json($foto);
+
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
+    }
+
+    public function imovel($id)
+    {
+        try {
+            $fotos = Foto::where('id_imovel', $id)->get();
+            return response()->json($fotos);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
     }
 }

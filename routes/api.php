@@ -41,4 +41,5 @@ Route::resource('tipo', 'TipoController', ['except' => ['create', 'edit']]);
 
 Route::resource('finalidade', 'FinalidadeController', ['except' => ['create', 'edit']]);
 
-Route::resource('foto', 'FotoController', ['except' => ['create', 'edit']]);
+Route::resource('foto', 'FotoController', ['except' => ['index', 'create', 'edit']]);
+Route::get('foto/imovel/{id}', 'FotoController@imovel')->name('foto.imovel');
