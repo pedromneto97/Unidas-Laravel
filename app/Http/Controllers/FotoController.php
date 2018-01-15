@@ -49,6 +49,7 @@ class FotoController extends Controller
             $nome = time();
             $nome = "{$nome}.{$ext}";
             $upload = $request->foto->storeAs('imagens', $nome, 'public');
+            sleep(1);
             if (!$upload)
                 return response('Erro ao realizar upload', 401);
             $foto = new Foto();
