@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::any('{path?}', function () {
+    return view("welcome");
+})->where("path", ".+");
