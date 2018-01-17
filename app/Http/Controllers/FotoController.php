@@ -48,7 +48,7 @@ class FotoController extends Controller
             $ext = $request->foto->extension();
             $nome = time();
             $nome = "{$nome}.{$ext}";
-            $upload = $request->foto->storeAs('imagens', $nome, 'public');
+            $upload = $request->foto->move(public_path('assets/images'), $nome);
             sleep(1);
             if (!$upload)
                 return response('Erro ao realizar upload', 401);
