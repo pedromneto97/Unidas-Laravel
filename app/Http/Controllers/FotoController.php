@@ -48,7 +48,7 @@ class FotoController extends Controller
             $ext = $request->foto->extension();
             $nome = time();
             $nome = "{$nome}.{$ext}";
-            $upload = $request->foto->move(public_path('assets/images'), $nome);
+            $upload = $request->foto->move(public_path('assets/images/'), $nome);
             sleep(1);
             if (!$upload)
                 return response('Erro ao realizar upload', 401);
@@ -111,10 +111,11 @@ class FotoController extends Controller
             $ext = $request->foto->extension();
             $nome = time();
             $nome = "{$nome}.{$ext}";
-            $upload = $request->foto->storeAs('imagens', $nome, 'public');
+            $upload = $request->foto->move(public_path('assets/images/'), $nome);
             if (!$upload)
                 return response('Erro ao realizar upload', 401);
-            Storage::disk('public')->delete("imagens/{$foto->foto}");
+            $antigo = public_path('assets/images/'.$foto->foto);
+            $antigo;
             $foto->update([
                 'foto' => $nome
             ]);
@@ -136,8 +137,9 @@ class FotoController extends Controller
         try {
             $foto = Foto::find($id);
             $nome = $foto->foto;
+            $antigo = public_path('assets/images'.$nome);
             if ($foto->delete()) {
-                Storage::disk('public')->delete("imagens/{$nome}");
+                unlink($antigo);
                 return response("Foto deletada", 200);
             } else
                 return response("Nenhuma foto deletada", 204);
