@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="utf-8">
     <title>Imobiliária Unidas</title>
@@ -10,7 +10,7 @@
 </head>
 <body>
 <app-root>Carregando..</app-root>
-<script type="text/javascript" src="inline.9732369cb26c8e86f561.bundle.js"></script>
+<script type="text/javascript" src="inline.64d1ce6a6df5dd7a0dde.bundle.js"></script>
 <script type="text/javascript" src="polyfills.dd2007432ec458ecea7e.bundle.js"></script>
 <script type="text/javascript" src="scripts.64e1a93274f0353ea812.bundle.js"></script>
 <script type="text/javascript" src="main.e064acf6828ad524fff6.bundle.js"></script>
