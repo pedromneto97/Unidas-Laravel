@@ -46,7 +46,7 @@ class FotoController extends Controller
             if ($validator->fails())
                 return response($validator->errors(), 401);
             $ext = $request->foto->extension();
-            $nome = time();
+            $nome = md5(time());
             $nome = "{$nome}.{$ext}";
             $upload = $request->foto->move(public_path('assets/images/'), $nome);
             sleep(1);
