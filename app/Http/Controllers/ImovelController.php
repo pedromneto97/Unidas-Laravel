@@ -24,7 +24,6 @@ class ImovelController extends Controller
                 ->with('finalidade')
                 ->with('tipo')
                 ->with('foto')
-                ->limit(8)
                 ->get();
             return response()->json($imoveis);
         } catch (\Exception $exception) {
