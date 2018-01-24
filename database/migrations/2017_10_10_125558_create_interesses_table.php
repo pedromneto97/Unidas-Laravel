@@ -18,7 +18,7 @@ class CreateInteressesTable extends Migration
             $table->string('nome')->nullable(false);
             $table->string('telefone')->nullable(true);
             $table->string('email')->nullable(true);
-            $table->boolean('atendido')->nullable(false);
+            $table->boolean('atendido')->nullable(false)->default(false);
             $table->integer('id_imovel', false, true);
             $table->timestamps();
 
