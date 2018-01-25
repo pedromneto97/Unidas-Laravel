@@ -48,7 +48,6 @@ class InteresseController extends Controller
 
             $interesse = new Interesse();
             $interesse->fill($request->all());
-            $interesse->atendido = false;
             $interesse->save();
             return response()->json($interesse);
         } catch (\Exception $exception) {
@@ -62,9 +61,14 @@ class InteresseController extends Controller
      * @param  \App\Interesse $interesse
      * @return \Illuminate\Http\Response
      */
-    public function show(Interesse $interesse)
+    public function show(Request $request, $id)
     {
-        //
+        try {
+            $interesse = Interesse::find($id);
+            return response()->json($interesse);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
     }
 
     /**
@@ -87,7 +91,17 @@ class InteresseController extends Controller
      */
     public function update(Request $request, Interesse $interesse)
     {
-        //
+        try {
+            $validator = Validator::make($request->all(), [
+                'atendido' => 'required|boolean'
+            ]);
+            if ($validator->fails())
+                return response($validator->errors(), 401);
+            $interesse->update(['atendido' => $request->atendido]);
+            return response()->json($interesse);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
     }
 
     /**
@@ -96,8 +110,24 @@ class InteresseController extends Controller
      * @param  \App\Interesse $interesse
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Interesse $interesse)
+    public function destroy($id)
     {
-        //
+        try {
+            $interesse = Interesse::find($id);
+            if ($interesse->delete())
+                return response('Imóvel deletado', 200);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
+    }
+
+    public function atender(Request $request)
+    {
+        try {
+            $interesse = Interesse::where('atendido', false)->get();
+            return response()->json($interesse);
+        } catch (\Exception $exception) {
+            return response($exception->getMessage(), 401);
+        }
     }
 }

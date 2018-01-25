@@ -16,7 +16,6 @@ Route::post('auth/cadastro', 'Auth\RegisterController@create');
 Route::post('auth/login', 'Auth\LoginController@login');
 Route::get('auth/logout', 'Auth\LoginController@logout');
 
-Route::get('imovel/todos', 'ImovelController@todos');
 Route::resource('imovel', 'ImovelController');
 Route::get('imovel/finalidade/{id}', 'ImovelController@buscaFinalidade');
 Route::get('imovel/tipo/{id}', 'ImovelController@buscaFinalidade');
@@ -36,6 +35,7 @@ Route::post('cidade/busca', 'CidadeController@busca')->name('cidade.busca');
 Route::resource('estado', 'EstadoController', ['except' => ['create', 'edit']]);
 
 Route::resource('interesse', 'InteresseController', ['except' => ['create', 'edit']]);
+Route::get('interesse/atender', 'InteresseController@atender')->name('interesse.atender');
 
 Route::resource('tipo', 'TipoController', ['except' => ['create', 'edit']]);
 
