@@ -1,18 +1,19 @@
 <!doctype html>
-<html>
+<html lang="pt">
 <head>
     <meta charset="utf-8">
     <title>Imobiliária Unidas</title>
     <base href="/">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link href="styles.bundle.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <app-root>Carregando..</app-root>
-<script type="text/javascript" src="inline.bundle.js"></script>
-<script type="text/javascript" src="polyfills.bundle.js"></script>
-<script type="text/javascript" src="scripts.bundle.js"></script>
-<script type="text/javascript" src="main.bundle.js"></script>
+<script type="text/javascript" src="runtime.js"></script>
+<script type="text/javascript" src="polyfills.js"></script>
+<script type="text/javascript" src="scripts.js"></script>
+<script type="text/javascript" src="main.js"></script>
 </body>
 </html>
