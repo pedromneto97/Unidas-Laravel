@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +14,6 @@ class Cidade extends Model
 
     public function Estado()
     {
-        return $this->belongsTo('App\Estado', 'id_estado');
+        return $this->belongsTo('App\Models\Estado', 'id_estado');
     }
 }

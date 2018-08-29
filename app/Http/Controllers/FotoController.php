@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Foto;
+use App\Models\Foto;
 use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;

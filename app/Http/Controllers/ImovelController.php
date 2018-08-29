@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Imovel;
+use App\Models\Imovel;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

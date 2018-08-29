@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +14,6 @@ class Rua extends Model
 
     public function Bairro()
     {
-        return $this->belongsTo('App\Bairro', 'id_bairro');
+        return $this->belongsTo('App\Models\Bairro', 'id_bairro');
     }
 }

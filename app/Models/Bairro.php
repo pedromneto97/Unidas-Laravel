@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +13,6 @@ class Bairro extends Model
 
     public function Cidade()
     {
-        return $this->belongsTo('App\Cidade', 'id_cidade');
+        return $this->belongsTo('App\Models\Cidade', 'id_cidade');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Cidade;
+use App\Models\Cidade;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Finalidade;
-use Illuminate\Http\Request;
+use App\Models\Finalidade;
 use DB;
+use Illuminate\Http\Request;
 
 class FinalidadeController extends Controller
 {

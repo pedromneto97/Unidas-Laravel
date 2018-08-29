@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Tipo;
+use App\Models\Tipo;
 use DB;
 use Illuminate\Http\Request;
 
